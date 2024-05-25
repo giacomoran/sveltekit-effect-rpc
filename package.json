@@ -9,12 +9,15 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"sync": "svelte-kit sync"
 	},
 	"devDependencies": {
 		"@effect/platform": "^0.55.0",
 		"@effect/platform-node": "^0.51.0",
 		"@effect/platform-browser": "^0.35.0",
+		"@effect/rpc": "^0.30.35",
+		"@effect/rpc-http": "^0.28.35",
 		"@effect/schema": "^0.67.13",
 		"@effect/sql": "^0.3.0",
 		"@effect/sql-sqlite-node": "0.3.1",

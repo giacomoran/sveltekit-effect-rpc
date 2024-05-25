@@ -1,12 +1,11 @@
-import { makeRouter } from '$lib/server/api';
-import { runtime, toSvelteKitHandler } from '$lib/server/runtime.js';
+import { RouterTag } from '$lib/server/router.js';
+import { runtimeServer, toSvelteKitRequestHandler } from '$lib/server/runtime-server.js';
 import { Effect, pipe } from 'effect';
 
 const handler = await pipe(
-	makeRouter,
-	Effect.map(toSvelteKitHandler),
-	Effect.orDie,
-	runtime.runPromise
+	RouterTag,
+	Effect.map(toSvelteKitRequestHandler),
+	runtimeServer.runPromise
 );
 
 export const GET = handler;
