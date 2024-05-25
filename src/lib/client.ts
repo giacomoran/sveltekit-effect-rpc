@@ -16,7 +16,9 @@ export const makeClient = Effect.sync(() => {
 		HttpClient.client.mapRequestEffect((request) =>
 			Effect.gen(function* () {
 				const event = yield* Effect.serviceOption(SvelteKitLoadEvent);
-				if (Option.isNone(event) && !browser) yield* Effect.dieMessage('Unreachable');
+				if (Option.isNone(event) && !browser) {
+					yield* Effect.dieMessage('Invoked RPC from outside load event in SSR');
+				}
 				return Option.match(event, {
 					onNone: () => request.pipe(HttpClient.request.prependUrl('/api/rpc')),
 					onSome: (_) => request.pipe(HttpClient.request.prependUrl(new URL('/api/rpc', _.url)))
@@ -26,7 +28,9 @@ export const makeClient = Effect.sync(() => {
 		HttpClient.client.transformResponse((effect) =>
 			Effect.gen(function* () {
 				const event = yield* Effect.serviceOption(SvelteKitLoadEvent);
-				if (Option.isNone(event) && !browser) yield* Effect.dieMessage('Unreachable');
+				if (Option.isNone(event) && !browser) {
+					yield* Effect.dieMessage('Invoked RPC from outside load event in SSR');
+				}
 				return yield* Option.match(event, {
 					onNone: () => effect,
 					onSome: (_) => effect.pipe(Effect.provideService(HttpClient.client.Fetch, _.fetch))

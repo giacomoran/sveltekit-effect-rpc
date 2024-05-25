@@ -2,10 +2,9 @@
 import { HttpServer } from '@effect/platform';
 import * as Sqlite from '@effect/sql-sqlite-node';
 
-import { PRIVATE_DATABASE_FILE } from '$env/static/private';
 import * as Kit from '@sveltejs/kit';
 import type { Scope } from 'effect';
-import { Cause, ConfigProvider, Effect, Exit, Layer, ManagedRuntime } from 'effect';
+import { Cause, Effect, Exit, Layer, ManagedRuntime } from 'effect';
 import { DbLive } from './db.js';
 import { RouterLive, type RouterTag } from './router.js';
 import { SvelteKitRequestEvent } from './svelte-kit-request-event.js';
@@ -13,16 +12,7 @@ import { SvelteKitRequestEvent } from './svelte-kit-request-event.js';
 export type ServicesAppServer = RouterTag | Sqlite.client.SqliteClient;
 export type ServicesRequestServer = SvelteKitRequestEvent;
 
-const ServicesAppServerLive: Layer.Layer<ServicesAppServer> = Layer.mergeAll(
-	RouterLive,
-	DbLive
-).pipe(
-	Layer.provide(
-		Layer.setConfigProvider(
-			ConfigProvider.fromMap(new Map([['DATABASE_FILE', PRIVATE_DATABASE_FILE]]))
-		)
-	)
-);
+const ServicesAppServerLive: Layer.Layer<ServicesAppServer> = Layer.mergeAll(RouterLive, DbLive);
 export const runtimeServer = ManagedRuntime.make(ServicesAppServerLive);
 
 // Adapted from toWebHandlerRuntime https://github.com/Effect-TS/effect/blob/c23b142/packages/platform/src/Http/App.ts#L134-L135
