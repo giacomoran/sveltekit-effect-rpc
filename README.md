@@ -1,38 +1,20 @@
-# create-svelte
+# SvelteKit + `@effect/rcp`
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+SvelteKit app where:
 
-## Creating a project
+- API endpoints are created using Effect's `Router`.
+- The API is implemented using `@effect/rpc`.
+- During SSR, HTTP calls are skipped when RPCs are called.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Notes
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+- Use `routes/api/[...paths]` to create multiple API endpoints simultaneously.
+- SvelteKit's custom `fetch` skips HTTP calls during SSR. Pass it to Effect using the `HttpClient.client.Fetch` Tag.
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+## Refs
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- [Using Hono with SvelteKit - Full type-safety with RPC](https://dev.to/bop/using-hono-with-sveltekit-full-type-safety-with-rpc-2h7)
+- [README for @effect/platform](https://github.com/Effect-TS/effect/blob/main/packages/platform/README.md)
+- [mikearnaldi/refactor.ts](https://gist.github.com/mikearnaldi/b255f52afbbeb003026c3ce26acf124a)
+- [SvelteKit docs - Advanced routing](https://kit.svelte.dev/docs/advanced-routing)
+- [SvelteKit docs - Loading data - Making fetch requests](https://dev.to/bop/using-hono-with-sveltekit-full-type-safety-with-rpc-2h7)
