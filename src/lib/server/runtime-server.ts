@@ -8,11 +8,17 @@ import { Cause, Effect, Exit, Layer, ManagedRuntime } from 'effect';
 import { DbLive } from './db.js';
 import { RouterLive, type RouterTag } from './router.js';
 import { SvelteKitRequestEvent } from './svelte-kit-request-event.js';
+import { TracingLive } from './tracing.js';
 
 export type ServicesAppServer = RouterTag | Sqlite.client.SqliteClient;
 export type ServicesRequestServer = SvelteKitRequestEvent;
 
-const ServicesAppServerLive: Layer.Layer<ServicesAppServer> = Layer.mergeAll(RouterLive, DbLive);
+const ServicesAppServerLive: Layer.Layer<ServicesAppServer> = Layer.mergeAll(
+	RouterLive,
+	DbLive,
+	TracingLive
+);
+
 export const runtimeServer = ManagedRuntime.make(ServicesAppServerLive);
 
 // Adapted from toWebHandlerRuntime https://github.com/Effect-TS/effect/blob/c23b142/packages/platform/src/Http/App.ts#L134-L135

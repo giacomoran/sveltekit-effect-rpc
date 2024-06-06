@@ -13,6 +13,7 @@
 		"sync": "svelte-kit sync"
 	},
 	"dependencies": {
+		"@effect/opentelemetry": "^0.34.17",
 		"@effect/platform": "^0.55.0",
 		"@effect/platform-node": "^0.51.0",
 		"@effect/platform-browser": "^0.35.0",
@@ -21,6 +22,9 @@
 		"@effect/schema": "^0.67.13",
 		"@effect/sql": "^0.3.0",
 		"@effect/sql-sqlite-node": "^0.3.1",
+		"@opentelemetry/exporter-trace-otlp-http": "^0.52.0",
+		"@opentelemetry/sdk-trace-node": "^1.25.0",
+		"@opentelemetry/sdk-trace-web": "^1.25.0",
 		"effect": "^3.2.5"
 	},
 	"devDependencies": {
