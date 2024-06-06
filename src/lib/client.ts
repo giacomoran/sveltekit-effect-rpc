@@ -1,7 +1,7 @@
 import { browser } from '$app/environment';
 import { HttpClient } from '@effect/platform';
 import { Resolver } from '@effect/rpc';
-import { HttpResolver } from '@effect/rpc-http';
+import { HttpResolverNoStream } from '@effect/rpc-http';
 import { Context, Effect, Layer, Option } from 'effect';
 import type { RouterRpc } from './server/router.js';
 import { SvelteKitLoadEvent } from './svelte-kit-load-event.js';
@@ -39,7 +39,7 @@ export const makeClient = Effect.sync(() => {
 		)
 	);
 
-	return HttpResolver.make<RouterRpc>(clientHttp).pipe(Resolver.toClient);
+	return HttpResolverNoStream.make<RouterRpc>(clientHttp).pipe(Resolver.toClient);
 });
 
 export const ClientLive = Layer.effect(ClientTag, makeClient);

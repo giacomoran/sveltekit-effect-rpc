@@ -1,6 +1,6 @@
 import { HttpServer } from '@effect/platform';
 import { Router, Rpc } from '@effect/rpc';
-import { HttpRouter } from '@effect/rpc-http';
+import { HttpRouterNoStream } from '@effect/rpc-http';
 import { Schema } from '@effect/schema';
 import * as Sql from '@effect/sql';
 import * as Sqlite from '@effect/sql-sqlite-node';
@@ -50,7 +50,7 @@ export const makeRouter = Effect.gen(function* () {
 	);
 
 	return HttpServer.router.empty.pipe(
-		HttpServer.router.post('/rpc', HttpRouter.toHttpApp(routerRpc)),
+		HttpServer.router.post('/rpc', HttpRouterNoStream.toHttpApp(routerRpc)),
 		HttpServer.router.prefixAll('/api'),
 		Effect.catchTags({
 			RouteNotFound: () => HttpServer.response.text('Route Not Found', { status: 404 }),
