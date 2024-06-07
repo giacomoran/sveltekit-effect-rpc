@@ -54,7 +54,8 @@ export const makeRouter = Effect.gen(function* () {
 		HttpServer.router.prefixAll('/api'),
 		Effect.catchTags({
 			RouteNotFound: () => HttpServer.response.text('Route Not Found', { status: 404 }),
-			RequestError: () => HttpServer.response.text('Bad Request', { status: 400 })
+			RequestError: () => HttpServer.response.text('Bad Request', { status: 400 }),
+			ParseError: () => HttpServer.response.text('Bad Request', { status: 400 })
 		})
 	);
 });
